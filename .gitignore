@@ -1,0 +1,10 @@
+.vscode/
+.qodo/
+.idea/
+cmake-build-debug/
+# anything end with .exe
+*.exe
+# anything end with .txt
+*.txt
+*.pdf
+
