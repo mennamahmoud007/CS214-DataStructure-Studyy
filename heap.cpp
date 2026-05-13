@@ -1,9 +1,10 @@
 #include <iostream>
 using namespace std;
 
-class MaxHeap {
+class MaxHeap { //time complexity o
 public:
-    int heap[100];
+    int heap[100];//space complexity o(1) as we are using a fixed size array
+    //if we were to use a dynamic array or vector, the space complexity would be o(n) where n is the number of elements in the heap
     int size;
 
     // Constructor
@@ -34,7 +35,7 @@ public:
     }
 
     // Insert into heap
-    void insert(int value) {
+    void insert(int value) { //o(log n)
 
         // Insert at end
         heap[size] = value;
@@ -51,7 +52,7 @@ public:
     }
 
     // Heapify down
-    void heapify(int i) {
+    void heapify(int i) { //o(log n) = o(h) where h is the height of the heap, which is log n for a complete binary tree
 
         int largest = i;
         int left = leftChild(i);
@@ -73,9 +74,22 @@ public:
             heapify(largest);
         }
     }
+    //build a max heap class with insert
+    void buildMaxHeap(int arr[], int n) { //o(n) 
+
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heapify(i);
+        }
+        /*or with insert*/ //o(n log n)
+        /*
+        for (int i = 0; i < n; i++) {
+            insert(arr[i]);
+        }
+        */
+    }
 
     // Delete root (max element)
-    void deleteRoot() {
+    void deleteRoot() { //o(log n)
 
         if (size == 0) {
             cout << "Heap is empty\n";
@@ -92,7 +106,7 @@ public:
     }
 
     // Get maximum element
-    int getMax() {
+    int getMax() { //o(1)
 
         if (size == 0) {
             cout << "Heap is empty\n";
@@ -101,7 +115,17 @@ public:
 
         return heap[0];
     }
+    //sort an array using heap sort
+    void heapSort(int arr[], int n) { //o(n log n)
 
+        buildMaxHeap(arr, n);
+
+        for (int i = n - 1; i > 0; i--) {
+            swap(heap[0], heap[i]);
+            size--;
+            heapify(0);
+        }
+    }
     // Print heap
     void printHeap() {
 
@@ -111,11 +135,13 @@ public:
 
         cout << endl;
     }
+
 };
 
 int main() {
 
     MaxHeap h;
+    int n=sizeof(h.heap)/sizeof(h.heap[0]);
 
     // Insert elements
     h.insert(50);
