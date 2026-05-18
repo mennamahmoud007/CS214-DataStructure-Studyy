@@ -8,3 +8,6 @@ cmake-build-debug/
 *.txt
 *.pdf
 
+task1.cpp
+task1 ds.cpp
+DLL TASK.cpp

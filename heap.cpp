@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-class MaxHeap { //time complexity o
+class MaxHeap { //time complexity for insert, deleteRoot, getMax is o(log n) and for buildMaxHeap is o(n) and for heapSort is o(n log n)
 public:
     int heap[100];//space complexity o(1) as we are using a fixed size array
     //if we were to use a dynamic array or vector, the space complexity would be o(n) where n is the number of elements in the heap
@@ -88,21 +88,20 @@ public:
         */
     }
 
-    // Delete root (max element)
-    void deleteRoot() { //o(log n)
+    // Delete root (extract max element)
+    int deleteRoot() { //o(log n)
 
         if (size == 0) {
             cout << "Heap is empty\n";
             return;
         }
-
+        int maxElement = heap[0];
         // Replace root with last element
         heap[0] = heap[size - 1];
-
         size--;
-
         // Restore heap property
         heapify(0);
+        return maxElement;
     }
 
     // Get maximum element
@@ -114,6 +113,24 @@ public:
         }
 
         return heap[0];
+    }
+    // Increase key
+    void increaseKey(int index, int newValue) { //o(log n)
+
+        if (newValue < heap[index]) {
+            cout << "New value must be larger\n";
+            return;
+        }
+        // update value
+        heap[index] = newValue;
+        // heapify up
+        while (index > 0 &&
+            heap[index] > heap[parent(index)]) {
+
+            swap(heap[index], heap[parent(index)]);
+
+            index = parent(index);
+        }
     }
     //sort an array using heap sort
     void heapSort(int arr[], int n) { //o(n log n)
@@ -127,7 +144,7 @@ public:
         }
     }
     // Print heap
-    void printHeap() {
+    void printHeap() { //o(n)
 
         for (int i = 0; i < size; i++) {
             cout << heap[i] << " ";
@@ -137,6 +154,82 @@ public:
     }
 
 };
+
+//priority queue using linked list vs priority queue using heap
+// using linked list has o(n) time complexity for insertion and o(1) time complexity for deletion of the highest priority element,
+//  using heap has o(log n) time complexity for both insertion and deletion of the highest priority element.
+// Therefore, priority queue using heap is more efficient than priority queue using linked list for large datasets.
+//1)linked list implementation of priority queue
+struct Node {
+    int data;
+    int priority;
+    Node* next;
+
+    Node(int d, int p) : data(d), priority(p), next(nullptr) {}
+}; 
+class PriorityQueueLinkedList {
+private:
+    Node* head;
+public:
+    PriorityQueueLinkedList() : head(nullptr) {}
+    void push(int data, int priority) { //o(n)
+        Node* newNode = new Node(data, priority);
+        if (!head || head->priority < priority) {
+            newNode->next = head;
+            head = newNode;
+        } else {
+            Node* temp = head;
+            while (temp->next && temp->next->priority >= priority) {
+                temp = temp->next;
+            }
+            newNode->next = temp->next;
+            temp->next = newNode;
+        }
+    }
+    void pop() { //o(1)
+        if (head) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+    int top() { //o(1)
+        if (head) {
+            return head->data;
+        }
+        throw runtime_error("Priority Queue is empty");
+    }
+};
+//2)heap implementation of priority queue
+struct PriorityQueueHeap {
+private:
+    MaxHeap heap;
+public:
+    void push(int data, int priority) {
+        heap.insert(data);
+    }
+    void pop() {
+        heap.deleteRoot();
+    }
+    int top() {
+        return heap.getMax();
+    }
+    int maximum() {
+        return heap.getMax();
+    }    
+    int insert(int data, int priority) {
+        heap.insert(data);
+    }
+    int extractMax() {
+        return heap.deleteRoot();
+    }
+    void increaseKey(int index, int newValue) {
+        heap.increaseKey(index, newValue);
+    }    
+    
+};
+
+//-------------------TESTING THE HEAP IMPLEMENTATION------------------
 
 int main() {
 
