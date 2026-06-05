@@ -6,7 +6,7 @@ template <class T>
 struct Node
 {
     T value;              
-    Node<T>* next;   // pointer على النود اللي بعدها
+    Node<T>* next;   // pointer to the next node in the list
 };
 template <class T>
 class llIterator
@@ -387,8 +387,8 @@ template <class T>
 struct DNode
 {
     T value;              
-    DNode<T>* next;   // pointer على النود اللي بعدها
-    DNode<T>* back;   // pointer على النود اللي قبلها
+    DNode<T>* next;   // pointer to the next node in the list
+    DNode<T>* back;   // pointer to the previous node in the list
 };
 template <class T>
 class doublyLinkedList{

@@ -12,7 +12,7 @@ const char lookupTable[10][2] = {
 char a[100];
 int rows = 10;
 ;
-// encode by binary search col 0
+// encode by binary search col 0 
 // thisisasecretmessage
 char encode(char target)
 {
@@ -37,7 +37,7 @@ char encode(char target)
     }
     return '?';
 }
-// linear search
+// linear search for decode col 1
 char decode(char target)
 {
     for (int i = 0; i < rows; i++)
@@ -63,10 +63,9 @@ char decode(char target)
 // int binsearch(int arr[], int n, int target, int &cnt){
 //     int low = 0;
 //     int high = n - 1;
-//     int mid;
+//     int mid = low + (high - low) / 2;;
 //     while (low <= high){
 //         cnt++;
-//         mid = low + (high - low) / 2;
 //         if (arr[mid] == target){
 //             return mid;
 //         }
