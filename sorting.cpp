@@ -18,7 +18,8 @@ while selection and bubble sorts are generally less efficient for larger arrays 
 speed: insertion > selection > bubble
 
 all of them are inplace, meaning they sort the array without requiring additional storage space (beyond a few temporary variables).
-and are stable, meaning they maintain the relative order of equal elements in the sorted output.
+insertion & bubble sort is stable, meaning it maintains the relative order of equal elements in the sorted output.
+selection sort is not stable, as the swapping of elements can change the relative order of equal elements.
 */
 
 //-------------------------------------1) Insertion Sort------------------------------------------------------------
@@ -83,7 +84,8 @@ average case O(n^2) comparisons and O(n^2) movements (swaps) when the input arra
  while merge sort guarantees O(n log n) time complexity in all cases, quick sort has an average and best-case time complexity of O(n log n) 
  but can degrade to O(n^2) in the worst case (e.g., when the smallest or largest element is always chosen as the pivot).
 
- both of them are not inplace, meaning they require additional storage space to hold the temporary arrays during the sorting process.
+ merge sort is not inplace, meaning they require additional storage space to hold the temporary arrays during the sorting process.
+ but quick sort is inplace, as it sorts the array without requiring additional storage space (beyond a few temporary variables).
  merge sort is stable, meaning it maintains the relative order of equal elements in the sorted output,
  while quick sort is not stable, as the relative order of equal elements may not be preserved due to the partitioning process.
  
@@ -208,6 +210,8 @@ void countingSort(int A[], int B[], int n, int k)
         C[A[j]]--;
     }
 }
+//not inplace, as it requires additional storage space for the auxiliary array C and the output array B.
+//stable, as it maintains the relative order of equal elements in the sorted output.
 
 //------------------------2) radix sort--------------------------------------------------------
 void countByDigit(int arr[], int n, int exp) { 

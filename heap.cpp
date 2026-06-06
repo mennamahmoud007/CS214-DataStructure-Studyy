@@ -155,10 +155,15 @@ public:
 
 };
 
+//===================================================================================================
+//                                          priority queue 
+//===================================================================================================
 //priority queue using linked list vs priority queue using heap
 // using linked list has o(n) time complexity for insertion and o(1) time complexity for deletion of the highest priority element,
 //  using heap has o(log n) time complexity for both insertion and deletion of the highest priority element.
 // Therefore, priority queue using heap is more efficient than priority queue using linked list for large datasets.
+
+
 //1)linked list implementation of priority queue
 struct Node {
     int data;
@@ -167,14 +172,14 @@ struct Node {
 
     Node(int d, int p) : data(d), priority(p), next(nullptr) {}
 }; 
-class PriorityQueueLinkedList {
+class PriorityQueueLinkedList { 
 private:
     Node* head;
 public:
     PriorityQueueLinkedList() : head(nullptr) {}
     void push(int data, int priority) { //o(n)
         Node* newNode = new Node(data, priority);
-        if (!head || head->priority < priority) {
+        if (!head || head->priority < priority) {   
             newNode->next = head;
             head = newNode;
         } else {
@@ -200,6 +205,7 @@ public:
         throw runtime_error("Priority Queue is empty");
     }
 };
+
 //2)heap implementation of priority queue
 struct PriorityQueueHeap {
 private:

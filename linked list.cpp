@@ -543,7 +543,7 @@ class doublyLinkedList{
     
     //     }
     // }
-    void insertFirst(const Type& newItem){
+    void insertFirst(const Type& newItem){ 
         DNode <T>* newNode = new DNode<T>;
         newNode->value = newItem;
         if (count ==0){ //if the list is empty before insertion
@@ -626,8 +626,8 @@ class doublyLinkedList{
                 break;
                 current = current->next; //move to the next node before deleting the current node to avoid dangling pointer     
             }
-            current -> back->next = current->next; //link the previous node to the next node
-            current -> next->back = current->back; //link the next node to the previous node
+            current -> back -> next = current -> next; //link the previous node to the next node
+            current -> next -> back = current -> back; //link the next node to the previous node
             delete current;
             count--;
             if(current==NULL) cout<<"The item to be deleted is not in the list."<<endl;

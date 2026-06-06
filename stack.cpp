@@ -111,8 +111,14 @@ public:
         }
     }
 
-    void print()
+    void print() //returns it with reverse order of insertion
     {
+        if (isEmpty())
+        {
+            cout << "The stack is empty.\n";
+            return;
+        }
+    
         cout << "\nStack contents:\n";
         for (int i = top; i >= 0; i--)
             cout << stackArray[i] << endl;
@@ -227,9 +233,10 @@ string addLargeNumbers(string num1, string num2)
             sum += s2.top();
             s2.pop();
         }
-
+// Push the last digit of the sum onto the result stack
         result.push(sum % 10);   // Push the units digit
-        carry = sum / 10;        // Calculate the carry
+        // Update the carry for the next iteration as the tens digit of the sum
+        carry = sum / 10;        
     }
 
     // If there's a remaining carry
@@ -248,9 +255,6 @@ string addLargeNumbers(string num1, string num2)
 }
 //------------------------------------------------------------------------------------------------------------------------
 //postfixint
-#include <iostream>
-#include <stack>
-using namespace std;
 
 int evaluatePostfix(string exp)
 {

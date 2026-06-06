@@ -1,6 +1,5 @@
 #include <iostream>
 using namespace std;
-// Implement a queue of integers using an array. The queue should have the following member functions:
 
 // ======================================================
 // ======================= IntQueue ======================
@@ -75,8 +74,7 @@ public:
     }
     void clear()
     { // time complexity O(1)
-        front = queueSize - 1;
-        rear = queueSize - 1;
+        front = rear = -1;
         count = 0;
     }
 
@@ -206,7 +204,7 @@ linkedQueue():frontPtr(NULL), rearPtr(NULL), length(0)
 		return (length == 0);
 	}
 
-	void dequeue()
+	void dequeue() //o(1)
 	{
 		if (isEmpty())
 			cout << "Empty Queue" << endl;
@@ -225,7 +223,7 @@ linkedQueue():frontPtr(NULL), rearPtr(NULL), length(0)
 		}
 	}
 
-	void enqueue(t item)
+	void enqueue(t item) //o(1)
 	{
 		Node *newNode = new Node;
 		newNode->item = item;
@@ -253,7 +251,7 @@ linkedQueue():frontPtr(NULL), rearPtr(NULL), length(0)
 		return rearPtr->item;
 	}
 
-	void clearQueue()
+	void clearQueue() // O(n)
 	{
 		Node *current;
 
@@ -266,7 +264,7 @@ linkedQueue():frontPtr(NULL), rearPtr(NULL), length(0)
 		rearPtr = NULL;
 		length = 0;
 	}
-	void display()
+	void display() //o(n)
 	{
 		Node*cur = frontPtr;
 		cout << "Item in the queue :[ ";
@@ -277,7 +275,7 @@ linkedQueue():frontPtr(NULL), rearPtr(NULL), length(0)
 		}cout << "]" << endl;
 	}
 
-	void search(t item)
+	void search(t item) //o(n)
 	{
 		Node*cur = frontPtr;
 		bool flag = true;
