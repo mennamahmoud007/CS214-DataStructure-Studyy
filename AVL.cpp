@@ -35,6 +35,14 @@ public:
         if (node == nullptr) return 0;
         return getHeight(node->left) - getHeight(node->right);
     }
+    bool isBalanced(Node* node) {
+        if (node == nullptr) return true;
+        int balance = getBalance(node);
+        if (balance > 1 || balance < -1)
+            return false;
+
+        return isBalanced(node->left) && isBalanced(node->right);
+    }
 
     // Right rotation (LL case)
     Node* rightRotate(Node* y) {
@@ -126,7 +134,7 @@ public:
         else if (key > node->data)
             node->right = deleteNode(node->right, key);
         else {
-            // one or zero child
+            // one or zero child--
             if (node->left == nullptr || node->right == nullptr) {
                 Node* temp = node->left ? node->left : node->right;
 
@@ -223,9 +231,7 @@ public:
         while (!q.empty()) {
             Node* current = q.front();
             q.pop();
-
             cout << current->data << " ";
-
             if (current->left)
                 q.push(current->left);
             if (current->right)

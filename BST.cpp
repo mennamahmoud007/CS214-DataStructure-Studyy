@@ -10,8 +10,7 @@ struct Node {
 
     Node(int value) {
         data = value;
-        left = nullptr;
-        right = nullptr;
+        left =right = nullptr;
     }
 };
 /*template <class T>
@@ -57,14 +56,14 @@ public:
         root = nullptr;
     }
     //final questions i think
-    int height(Node* root) {
+    int height(Node* root) { 
         if (root == nullptr)
-            return -1; // height of empty tree is -1
+            return 0; // height of empty tree is 0
 
         int leftHeight = height(root->left);
         int rightHeight = height(root->right);
 
-        return max(leftHeight, rightHeight) + 1;
+        return max(leftHeight, rightHeight) + 1; // height of a node is max height of its children + 1
     }
     int countNodes(Node* root) {
         if (root == nullptr)
@@ -89,7 +88,7 @@ public:
     }
 
     // Insert
-    Node* insert(Node* node, int data) {
+    Node* insert(Node* node, int data) { //worset case o(n) when tree is skewed, average and best case o(log n) when tree is balanced
         if (node == nullptr)
             return new Node(data);
 
@@ -97,6 +96,31 @@ public:
             node->left = insert(node->left, data);
         else if (data > node->data)
             node->right = insert(node->right, data);
+
+        return node;
+    }
+
+    Node* insertIterative(Node* node, int data) { //o(n) when tree is skewed, o(log n) when tree is balanced
+        if (node == nullptr)
+            return new Node(data);
+
+        Node* parent = nullptr;
+        Node* current = node;
+
+        while (current != nullptr) {
+            parent = current;
+            if (data < current->data)
+                current = current->left;
+            else if (data > current->data)
+                current = current->right;
+            else
+                return node; // duplicate data, do not insert
+        }
+
+        if (data < parent->data)
+            parent->left = new Node(data);
+        else
+            parent->right = new Node(data);
 
         return node;
     }
@@ -116,22 +140,22 @@ public:
         return node;
     }
     // Find successor
-    Node* successor(Node* node) {
-        if (node->right != nullptr)
+    Node* successor(Node* node) { // successor is minimum of right subtree
+        if (node->right != nullptr)  // if right subtree exists, successor is minimum of right subtree
             return minValue(node->right);
-
+        // if right subtree does not exist, successor is the lowest
+        // ancestor(greater than node) of node whose left child is also an ancestor of node
         Node* succ = nullptr;
         Node* ancestor = root;
-
         while (ancestor != node) {
-            if (node->data < ancestor->data) {
-                succ = ancestor;
+            if (node->data < ancestor->data) { //who is the lowest ancestor of node whose left child is also an ancestor of node?
+                // the one that is greater than node and is the lowest among all ancestors that are greater than node
+                succ = ancestor; // update successor to current ancestor before going left
                 ancestor = ancestor->left;
             }
             else
                 ancestor = ancestor->right;
         }
-
         return succ;
     }
 
@@ -221,7 +245,7 @@ public:
         // if (p->right != 0)
         // queue.enqueue (p->right);
         // }
-
+//---------------------------------------------------------------------------------------------------------
     // DFS Traversals
     void inorder(Node* node) {
         if (node != nullptr) {
@@ -248,38 +272,29 @@ public:
     }
 
     // BFS
-    void bfs(Node* node) {
-
-        if (node == nullptr)
-            return;
-
+    void bfs(Node* node) { //o(n) //print level by level from left to right
+        if (node == nullptr) return;
         queue<Node*> q;
         q.push(node);
 
         while (!q.empty()) {
-
             Node* current = q.front();
             q.pop();
-
             cout << current->data << " ";
-
             if (current->left)
                 q.push(current->left);
-
             if (current->right)
                 q.push(current->right);
         }
     }
-    Node*search(Node* node, int key) {
+    Node*recursiveSearch(Node* node, int key) { //o(h) where h is the height of the tree
         if (node == nullptr || node->data == key)
             return node;
-
         if (key < node->data)
-            return search(node->left, key);
-
-        return search(node->right, key);
+            return recursiveSearch(node->left, key);
+        return recursiveSearch(node->right, key);
     }
-    bool searchIterative(Node* node, int key) {
+    bool searchIterative(Node* node, int key) { //o(h) where h is the height of the tree
         while (node != nullptr) {
             if (node->data == key)
                 return true;
