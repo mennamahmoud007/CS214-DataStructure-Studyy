@@ -72,8 +72,9 @@ public:
         return y;
     }
 
-    // Insert
-    Node* insert(Node* node, int key) {
+    // Insert 
+    Node* insert(Node* node, int key) { //o(n) when tree is skewed, o(log n) when tree is balanced for one insertion
+        // for n insertions, worst case o(n^2) when tree is skewed, average and best case o(n log n) when tree is balanced
 
         // Normal BST insert
         if (node == nullptr)

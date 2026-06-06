@@ -76,7 +76,14 @@ public:
     }
     //build a max heap class with insert
     void buildMaxHeap(int arr[], int n) { //o(n) 
+        // copy array to heap
+        for (int i = 0; i < n; i++) {
+            heap[i] = arr[i];
+        }
 
+        size = n;
+
+        // start from last internal node
         for (int i = n / 2 - 1; i >= 0; i--) {
             heapify(i);
         }
